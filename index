@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YMTEA AR Experience</title>
+  <!-- 引入 A-Frame 与 MindAR 库 -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  
+  <script>
+    // 注册自定义点击跳转组件
+    AFRAME.registerComponent('goto-store', {
+      init: function () {
+        this.el.addEventListener('click', (evt) => {
+          // 触发跳转至您的英文独立站
+          window.location.href = 'https://en.ymtea.club';
+        });
+      }
+    });
+  </script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene 
+    mindar-image="imageTargetSrc: ./targets.mind;" 
+    color-space="sRGB" 
+    renderer="colorManagement: true, physicallyCorrectLights" 
+    vr-mode-ui="enabled: false" 
+    device-orientation-permission-ui="enabled: false"
+    embedded>
+    
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="objects: [clickable]"></a-camera>
+
+    <!-- 绑定识别到第 0 个目标（Logo/包装图腾）时触发 -->
+    <a-entity mindar-image-target="targetIndex: 0">
+      
+      <!-- 3D 品牌展示平面（可放品牌标语或动态视觉） -->
+      <a-plane position="0 0 0" rotation="0 0 0" width="1" height="0.5" color="#111" opacity="0.8"></a-plane>
+      <a-text value="YMTEA Yunnan Direct" position="-0.4 0.1 0.01" color="#FFF" width="2"></a-text>
+      <a-text value="EU Compliant & Low MOQ" position="-0.4 -0.05 0.01" color="#D4AF37" width="1.5"></a-text>
+
+      <!-- 可点击的交互按钮：点击后跳转至 en.ymtea.club -->
+      <a-plane 
+        position="0 -0.3 0.01" 
+        rotation="0 0 0" 
+        width="0.8" 
+        height="0.2" 
+        color="#D4AF37" 
+        clickable 
+        goto-store>
+        <a-text value="Explore Store" align="center" position="0 0 0.01" color="#000" width="1.8"></a-text>
+      </a-plane>
+
+    </a-entity>
+  </a-scene>
+</body>
+</html>
